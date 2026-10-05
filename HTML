@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tulum ATV Rides | Tours, Alquiler y Yates</title>
+<style>
+  /* ============ RESET Y BASE ============ */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --verde-oscuro: #1A4035;
+    --verde-medio: #6C8C5D;
+    --verde-claro: #A2A649;
+    --beige: #BFB8AE;
+    --amarillo: #C9BD2F;
+    --gris-oscuro: #262626;
+    --blanco: #FFFFFF;
+    --sombra: 0 4px 15px rgba(0,0,0,0.1);
+  }
+  body {
+    font-family: 'Segoe UI', Roboto, -apple-system, sans-serif;
+    color: var(--gris-oscuro);
+    line-height: 1.6;
+    background: #f9f9f7;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; }
+
+  /* ============ HEADER ============ */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(26, 64, 53, 0.97);
+    backdrop-filter: blur(10px);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  }
+  .logo {
+    color: var(--blanco);
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+  .logo span { color: var(--amarillo); }
+
+  .nav {
+    display: flex;
+    gap: 1.8rem;
+    align-items: center;
+  }
+  .nav a {
+    color: var(--blanco);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav a:hover { color: var(--amarillo); }
+  .nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 2px;
+    background: var(--amarillo);
+    transition: width 0.3s;
+  }
+  .nav a:hover::after { width: 100%; }
+
+  .btn-whatsapp-header {
+    background: #25D366;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .btn-whatsapp-header:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    min-height: 85vh;
+    background: linear-gradient(rgba(26, 64, 53, 0.65), rgba(26, 64, 53, 0.85)),
+                url('https://images.unsplash.com/photo-1551524559-8af4e6624178?w=1600') center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--blanco);
+  }
+  .hero-content { max-width: 800px; }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  }
+  .hero p {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    margin-bottom: 2rem;
+    opacity: 0.95;
+  }
+  .hero-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+  .btn-primary {
+    background: var(--amarillo);
+    color: var(--gris-oscuro);
+  }
+  .btn-primary:hover {
+    background: #d4c944;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(201, 189, 47, 0.4);
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--blanco);
+    border: 2px solid var(--blanco);
+  }
+  .btn-secondary:hover {
+    background: var(--blanco);
+    color: var(--verde-oscuro);
+  }
+
+  /* ============ SECCIONES GENERALES ============ */
+  section { padding: 4rem 2rem; }
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  .section-title {
+    text-align: center;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    color: var(--verde-oscuro);
+    margin-bottom: 0.5rem;
+  }
+  .section-subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 3rem;
+    font-size: 1.05rem;
+  }
+
+  /* ============ ¿POR QUÉ ELEGIRNOS? ============ */
+  .benefits {
+    background: var(--blanco);
+  }
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  .benefit-card {
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: 15px;
+    background: #f4f8f3;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .benefit-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--sombra);
+  }
+  .benefit-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  .benefit-card h3 {
+    color: var(--verde-oscuro);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  .benefit-card p { color: #555; font-size: 0.9rem; }
+
+  /* ============ SERVICIOS ============ */
+  .services { background: #f9f9f7; }
+
+  .category {
+    margin-bottom: 4rem;
+  }
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid var(--verde-medio);
+  }
+  .category-icon {
+    width: 50px;
+    height: 50px;
+    background: var(--verde-medio);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+  }
+  .category-header h3 {
+    color: var(--verde-oscuro);
+    font-size: 1.6rem;
+  }
+  .category-header .count {
+    background: var(--verde-claro);
+    color: white;
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    margin-left: auto;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* Grid especial para tours (6 items) */
+  .cards-grid-tours {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .service-card {
+    background: var(--blanco);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--sombra);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+  }
+  .service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+  }
+  .service-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    background: var(--verde-oscuro);
+  }
+  .service-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+  .service-card:hover .service-image img {
+    transform: scale(1.08);
+  }
+  .service-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--amarillo);
+    color: var(--gris-oscuro);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .service-content {
+    padding: 1.3rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .service-content h4 {
+    color: var(--verde-oscuro);
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+  }
+  .service-desc {
+    color: #666;
+    font-size: 0.9rem;
+    flex-grow: 1;
+    margin-bottom: 1rem;
+  }
+  .service-price {
+    color: var(--verde-medio);
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  .service-price small {
+    color: #999;
+    font-weight: 400;
+    font-size: 0.8rem;
+  }
+  .service-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .btn-card {
+    flex: 1;
+    padding: 0.7rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-info {
+    background: transparent;
+    border: 2px solid var(--verde-medio);
+    color: var(--verde-medio);
+  }
+  .btn-info:hover {
+    background: var(--verde-medio);
+    color: white;
+  }
+  .btn-book {
+    background: var(--verde-medio);
+    color: white;
+  }
+  .btn-book:hover {
+    background: var(--verde-oscuro);
+  }
+
+  /* ============ TESTIMONIOS ============ */
+  .testimonials {
+    background: var(--verde-oscuro);
+    color: var(--blanco);
+  }
+  .testimonials .section-title { color: var(--blanco); }
+  .testimonials .section-subtitle { color: rgba(255,255,255,0.7); }
+
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .testimonial-card {
+    background: rgba(255,255,255,0.08);
+    padding: 2rem;
+    border-radius: 15px;
+    border-left: 4px solid var(--amarillo);
+  }
+  .testimonial-text {
+    font-style: italic;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .testimonial-author {
+    font-weight: 700;
+    color: var(--amarillo);
+    font-size: 0.95rem;
+  }
+  .stars { color: var(--amarillo); margin-bottom: 0.8rem; }
+
+  /* ============ PROMOCIONES ============ */
+  .promos { background: #f9f9f7; }
+  .promo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .promo-card {
+    background: linear-gradient(135deg, var(--verde-medio), var(--verde-oscuro));
+    color: white;
+    padding: 2.5rem 2rem;
+    border-radius: 15px;
+    text-align: center;
+  }
+  .promo-card h3 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--amarillo);
+  }
+  .promo-card p { font-size: 1rem; }
+
+  /* ============ CTA FINAL ============ */
+  .cta-final {
+    background: linear-gradient(rgba(26,64,53,0.85), rgba(26,64,53,0.95)),
+                url('https://images.unsplash.com/photo-1533105079780-92b9be482077?w=1600') center/cover;
+    color: white;
+    text-align: center;
+    padding: 5rem 2rem;
+  }
+  .cta-final h2 {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    margin-bottom: 1rem;
+  }
+  .cta-final p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    opacity: 0.95;
+  }
+  .btn-whatsapp-big {
+    background: #25D366;
+    color: white;
+    padding: 1.1rem 2.5rem;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-weight: 700;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .btn-whatsapp-big:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.5);
+  }
+
+  /* ============ FOOTER ============ */
+  .footer {
+    background: var(--gris-oscuro);
+    color: rgba(255,255,255,0.8);
+    padding: 3rem 2rem 1.5rem;
+  }
+  .footer-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  .footer h4 {
+    color: var(--amarillo);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+  .footer ul { list-style: none; }
+  .footer li { margin-bottom: 0.5rem; font-size: 0.9rem; }
+  .footer a:hover { color: var(--amarillo); }
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* ============ WHATSAPP FLOTANTE ============ */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 60px;
+    height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+    z-index: 999;
+    transition: transform 0.3s;
+  }
+  .whatsapp-float:hover { transform: scale(1.1); }
+  .whatsapp-float svg { width: 32px; height: 32px; fill: white; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 768px) {
+    .header { padding: 0.8rem 1rem; flex-wrap: wrap; gap: 0.8rem; }
+    .nav { display: none; } /* Reemplazar por menú hamburguesa en producción */
+    .logo { font-size: 1.1rem; }
+    section { padding: 3rem 1rem; }
+    .category-header h3 { font-size: 1.3rem; }
+    .cards-grid-tours { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header">
+  <a href="#" class="logo">TULUM <span>ATV RIDES</span></a>
+  <nav class="nav">
+    <a href="#servicios">Servicios</a>
+    <a href="#tours">Tours</a>
+    <a href="#alquiler">Alquiler</a>
+    <a href="#mar">Yates y Mar</a>
+    <a href="#promos">Promociones</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+  <a href="https://wa.me/529842531713" target="_blank" class="btn-whatsapp-header">
+    📱 Reservar
+  </a>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Explora Tulum en ATV, Scooter o Yate</h1>
+    <p>Vive la aventura definitiva en la Riviera Maya. Tours guiados, alquiler de vehículos y experiencias en el mar, todo en un solo lugar.</p>
+    <div class="hero-buttons">
+      <a href="#servicios" class="btn btn-primary">Ver Servicios</a>
+      <a href="https://wa.me/529842531713" target="_blank" class="btn btn-secondary">Reservar por WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ¿POR QUÉ ELEGIRNOS? ============ -->
+<section class="benefits">
+  <div class="container">
+    <h2 class="section-title">¿Por qué elegirnos?</h2>
+    <p class="section-subtitle">Tu seguridad y diversión son nuestra prioridad</p>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">🛡️</div>
+        <h3>Vehículos Asegurados</h3>
+        <p>Todos nuestros ATVs y scooters están asegurados y con mantenimiento regular.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🚚</div>
+        <h3>Entrega Gratis</h3>
+        <p>Entrega y recogida sin costo en tu hotel o alojamiento en Tulum.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🌎</div>
+        <h3>Guías Bilingües</h3>
+        <p>Guías certificados en español e inglés para que no te pierdas nada.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">💰</div>
+        <h3>Mejor Precio</h3>
+        <p>Descuentos por reservas anticipadas y paquetes de varios días.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICIOS ============ -->
+<section class="services" id="servicios">
+  <div class="container">
+    <h2 class="section-title">Nuestros Servicios</h2>
+    <p class="section-subtitle">12 experiencias para que vivas Tulum a tu manera</p>
+
+    <!-- ===== CATEGORÍA 1: ATV TOURS (6) ===== -->
+    <div class="category" id="tours">
+      <div class="category-header">
+        <div class="category-icon">🏍️</div>
+        <h3>ATV Tours Guiados</h3>
+        <span class="count">6 tours</span>
+      </div>
+      <div class="cards-grid cards-grid-tours">
+
+        <!-- Tour 1 -->
+        <div class="service-card">
+          <div class="service-image">
+            <img src="https://images.unsplash.com/photo-1601758174114-e711c0cbaa69?w=600" alt="ATV + Cenote">
+            <span class="service-badge">Popular</span>
+          </div>
+          <div class="service-content">
+            <h4>ATV + Cenote</h4>
+            <p class="service-desc">Ride por la selva y refrescate en un cenote sagrado. Incluye entrada al Gran Cenote.</p>
+            <div class="service-price">Desde $2,200 MXN <small>/ persona</small></div>
+            <div class="service-actions">
+              <button class="btn-card btn-info">Info</button>
+              <a href="https://wa.me/529842531713" target="_blank" class="btn-card btn-book">Reservar</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tour 2 -->
+        <div class="service-card">
+          <div class="service-image">
+            <img src="https://images.unsplash.com/photo-1518639192441-8fce0a366e2e?w=600" alt="ATV + Ruinas">
+          </div>
+          <div class="service-content">
+            <h4>ATV + Ruinas de Tulum</h4>
+            <p class="service-desc">Llega a las ruinas arqueológicas en ATV con guía certificado incluido.</p>
+            <div class="service-price">Desde $2,300 MXN <small>/ persona</small></div>
+            <div class="service-actions">
+              <button class="btn-card btn-info">Info</button>
+              <a href="https://wa.me/529842531713" target="_blank" class="btn-card btn-book">Reservar</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tour 3 -->
+        <div class="service-card">
+          <div class="service-image">
+            <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600" alt="ATV + Tacos">
+          </div>
+          <div class="service-content">
+            <h4>ATV + Tacos Honorio</h4>
+            <p class="service-desc">Combina adrenalina con la mejor comida local: 4 tacos + bebida incluidos.</p>
+            <div class="service-price">Desde $1,600 MXN <small>/ persona</small></div>
+            <div class="service-actions">
+              <button class="btn-card btn-info">Info</button>
+              <a href="https://wa.me/529842531713" target="_blank" class="btn-card btn-book">Reservar</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tour 4 -->
+        <div class="service-card">
+          <div class="service-image">
+            <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600" alt="Selva Nocturna">
+            <span class="service-badge">Nuevo</span>
+          </div>
+          <div class="service-content">
+            <h4>Selva Nocturna</h4>
+            <p class="service-desc">Aventura nocturna por la selva con luces LED y observación de estrellas.</p>
+            <div class="service-price">Desde $2,500 MXN <small>/ persona</small></div>
+            <div class="service-actions">
+              <button class="btn-card btn-info">Info</button>
+              <a href="https://wa.me/529842531713" target="_blank" class="btn-card btn-book">Reservar</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tour 5 -->
+        <div class="service-card">
+          <div class="service-image">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600" alt="Playa Paraíso">
+          </div>
+          <div class="service-content">
+            <h4>ATV + Playa Paraíso</h4>
+            <p class="service-desc">Recorre la costa hasta Playa Paraíso, una de las mejores playas de México.</p>
+            <div class="service-price">Desde $2,000 MXN <small>/ persona</small></div>
+            <div class="service-actions">
+              <button class="btn-card btn-info">Info</button>
+              <a href="https://wa.me/529842531713" target="_blank" class="btn-card btn-book">Reservar</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tour 6 -->
+        <div class="service-card">
+          <div class="service-image">
+            <img src="https://images.unsplash.com/photo-1551524559-8af4e6624178?w=600" alt="Tour Personalizado">
+          </div>
+          <div class="service-content">
+            <h4>Tour Personalizado</h4>
+            <p class="service-desc">Diseñamos la ruta perfecta según tus intereses. Ideal para grupos y familias.</p>
+            <div class="service-price">Cotización <small>personalizada</small></div>
+            <div class="service-actions">
+              <button class="btn-card btn-info">Info</button>
+              <a href="https://wa.me/529842531713" target="_blank" class="btn-card btn-book">Cotizar</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== CATEGORÍA 2: ALQUILER (3) ===== -->
+    <div class="category" id="alquiler">
+      <div class="category-header">
+        <div class="category-icon">🔑</div>
+        <h3>Alquiler de Vehículos</h3>
+        <span class="count">3 opciones</span>
+      </div>
+      <div class="cards-grid">
+
+        <div class="service-card">
+          <div class="service-image">
+            <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600" alt="ATV 24h">
+            <span class="service-badge">24 hrs</span>
+          </div>
+          <div class="service-content">
+            <h4>Alquiler de ATV</h4>
+            <p class="service-desc">ATV completamente equipado por 24 horas. Incluye entrega, recogida y seguro.</p>
+            <div class="service-price">$1,000 MXN <small>/ $60 USD</small></div>
+            <div class="service-actions">
+              <button class="btn-card btn-info">Info</button>
+              <a href="https://wa.me/529842531713" target="_blank" class="btn-card btn-book">Reservar</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-image">
+            <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600" alt="Scooter 24h">
+            <span class="service-badge">24 hrs</span>
+          </div>
+          <div class="service-content">
+            <h4>Alquiler de Scooter</h4>
+            <p class="service-desc">Scooter equipado por 24 horas. Perfecto para moverte por Tulum sin gastar en taxis.</p>
+            <div class="service-price">$750 MXN <small>/ $40 USD</small></div>
+            <div class="service-actions">
+              <button class="btn-card btn-info">Info</button>
+              <a href="https://wa.me/529842531713" target="_blank" class="btn-card btn-book">Reservar</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-image">
+            <img src="https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?w=600" alt="Paquete Semanal">
+            <span class="service-badge">-10%</span>
+          </div>
+          <div class="service-content">
+            <h4>Paquete Semanal</h4>
+            <p class="service-desc">Alquila por 7 días y obtén 10% de descuento. Ideal para estancias largas.</p>
+            <div class="service-price">10% OFF <small>en toda la semana</small></div>
+            <div class="service-actions">
+              <button class="btn-card btn-info">Info</button>
+              <a href="https://wa.me/529842531713" target="_blank" class="btn-card btn-book">Reservar</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== CATEGORÍA 3: MAR (3) ===== -->
+    <div class="category" id="mar">
+      <div class="category-header">
+        <div class="category-icon">⛵</div>
+        <h3>Experiencias en el Mar</h3>
+        <span class="count">3 opciones</span>
+      </div>
+      <div class="cards-grid">
+
+        <div class="service-card">
+          <div class="service-image">
+            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600" alt="Yate">
+            <span class="service-badge">Premium</span>
+          </div>
+          <div class="service-content">
+            <h4>Alquiler de Yate 42 ft</h4>
+            <p class="service-desc">Yate privado saliendo desde Puerto Aventuras. Incluye comida y barra libre.</p>
+            <div class="service-price">Desde $900 USD</div>
+            <div class="service-actions">
+              <button class="btn-card btn-info">Info</button>
+              <a href="https://wa.me/529842531713" target="_blank" class="btn-card btn-book">Cotizar</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-image">
+            <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=600" alt="Catamarán">
+          </div>
+          <div class="service-content">
+            <h4>Alquiler de Catamarán</h4>
+            <p class="service-desc">Navega por la Riviera Maya con snorkel, comida y bebidas incluidas.</p>
+            <div class="service-price">Desde $750 USD</div>
+            <div class="service-actions">
+              <button class="btn-card btn-info">Info</button>
+              <a href="https://wa.me/529842531713" target="_blank" class="btn-card btn-book">Cotizar</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-image">
+            <img src="https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?w=600" alt="Tour Privado">
+          </div>
+          <div class="service-content">
+            <h4>Tour Privado en Barco</h4>
+            <p class="service-desc">Experiencia 100% personalizada. Tú eliges la ruta, la duración y el menú.</p>
+            <div class="service-price">Cotización <small>personalizada</small></div>
+            <div class="service-actions">
+              <button class="btn-card btn-info">Info</button>
+              <a href="https://wa.me/529842531713" target="_blank" class="btn-card btn-book">Cotizar</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ TESTIMONIOS ============ -->
+<section class="testimonials">
+  <div class="container">
+    <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+    <p class="section-subtitle">Miles de aventuras, miles de sonrisas</p>
+    <div class="testimonial-grid">
+
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"I had the most amazing experience renting an ATV and scooter! The staff was incredibly friendly and gave us great tips for places to visit."</p>
+        <p class="testimonial-author">— Rebecca Pecoy, CA</p>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="stars">★★★★★
